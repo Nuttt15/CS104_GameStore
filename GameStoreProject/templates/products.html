@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="eyebrow">Product Inventory</p>
+        <h1>Products</h1>
+    </div>
+    <a class="btn" href="/add_product">+ Add Product</a>
+</div>
+
+<div class="table-wrap">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Action</th>
+        </tr>
+
+        {% for p in products %}
+        <tr>
+            <td>#{{ p.product_id }}</td>
+            <td><strong>{{ p.product_name }}</strong></td>
+            <td><span class="tag">{{ p.category_name }}</span></td>
+            <td>{{ p.price }}</td>
+            <td>{{ p.stock }}</td>
+            <td class="actions">
+                <a class="link-btn" href="/edit_product/{{ p.product_id }}">Edit</a>
+                <a class="link-btn danger" href="/delete_product/{{ p.product_id }}"
+                   onclick="return confirm('Delete this product?')">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

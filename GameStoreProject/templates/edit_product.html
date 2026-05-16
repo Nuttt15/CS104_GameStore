@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="eyebrow">Update Item</p>
+        <h1>Edit Product</h1>
+    </div>
+</div>
+
+<form class="form-panel" method="post">
+    <label>
+        Product Name
+        <input name="product_name" value="{{ product.product_name }}" required>
+    </label>
+
+    <label>
+        Price
+        <input name="price" type="number" step="0.01" value="{{ product.price }}" required>
+    </label>
+
+    <label>
+        Stock
+        <input name="stock" type="number" value="{{ product.stock }}" required>
+    </label>
+
+    <label>
+        Category
+        <select name="category_id">
+            {% for c in categories %}
+            <option value="{{ c.category_id }}"
+                {% if c.category_id == product.category_id %}selected{% endif %}>
+                {{ c.category_name }}
+            </option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <div class="form-actions">
+        <a class="btn ghost" href="/products">Cancel</a>
+        <button type="submit">Update Product</button>
+    </div>
+</form>
+{% endblock %}
