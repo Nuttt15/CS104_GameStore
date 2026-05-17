@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="eyebrow">Product Inventory</p>
+        <h1>Products</h1>
+    </div>
+    <a class="btn" href="/add_product">+ Add Product</a>
+</div>
+
+<div class="category-filter">
+    <a class="{% if selected_category == 'all' %}active{% endif %}" href="/products">All</a>
+    {% for c in categories %}
+    <a class="{% if selected_category == c.category_id|string %}active{% endif %}"
+       href="/products?category={{ c.category_id }}">
+        {{ c.category_name }}
+    </a>
+    {% endfor %}
+</div>
+
+<div class="table-wrap">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Action</th>
+        </tr>
+
+        {% for p in products %}
+        <tr>
+            <td>#{{ p.product_id }}</td>
+            <td>
+                {% if p.image_filename %}
+                <img class="product-thumb"
+                     src="{{ url_for('static', filename='uploads/' + p.image_filename) }}"
+                     alt="{{ p.product_name }}">
+                {% else %}
+                <div class="product-placeholder">No Image</div>
+                {% endif %}
+            </td>
+            <td><strong>{{ p.product_name }}</strong></td>
+            <td><span class="tag">{{ p.category_name }}</span></td>
+            <td>{{ p.price }}</td>
+            <td>{{ p.stock }}</td>
+            <td class="actions">
+                <a class="link-btn" href="/edit_product/{{ p.product_id }}">Edit</a>
+                <a class="link-btn danger" href="/delete_product/{{ p.product_id }}"
+                   onclick="return confirm('Delete this product?')">Delete</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td class="empty-state" colspan="7">No products in this category yet.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
