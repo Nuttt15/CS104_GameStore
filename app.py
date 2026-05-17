@@ -39,12 +39,12 @@ def prepare_app_storage():
     app.config['UPLOAD_FOLDER'].mkdir(parents=True, exist_ok=True)
 
     conn = get_db_connection()
-    tables = conn.execute('''
+    products_table = conn.execute('''
         SELECT name FROM sqlite_master
         WHERE type = 'table' AND name = 'products'
     ''').fetchone()
 
-    if tables is None:
+    if products_table is None:
         conn.close()
         return
 
@@ -56,6 +56,19 @@ def prepare_app_storage():
         conn.commit()
 
     conn.close()
+
+
+def get_categories(conn):
+    return conn.execute('''
+        SELECT * FROM categories
+        ORDER BY
+            CASE category_name
+                WHEN 'Gaming Gear' THEN 1
+                WHEN 'Console Game' THEN 2
+                WHEN 'PC Game' THEN 3
+                ELSE 4
+            END
+    ''').fetchall()
 
 
 @app.route('/')
@@ -83,16 +96,7 @@ def index():
 def products():
     conn = get_db_connection()
     selected_category = request.args.get('category', 'all')
-    categories = conn.execute('''
-        SELECT * FROM categories
-        ORDER BY
-            CASE category_name
-                WHEN 'Gaming Gear' THEN 1
-                WHEN 'Console Game' THEN 2
-                WHEN 'PC Game' THEN 3
-                ELSE 4
-            END
-    ''').fetchall()
+    categories = get_categories(conn)
 
     sql = '''
         SELECT
@@ -135,16 +139,7 @@ def products_by_category(category_id):
 @app.route('/add_product', methods=['GET', 'POST'])
 def add_product():
     conn = get_db_connection()
-    categories = conn.execute('''
-        SELECT * FROM categories
-        ORDER BY
-            CASE category_name
-                WHEN 'Gaming Gear' THEN 1
-                WHEN 'Console Game' THEN 2
-                WHEN 'PC Game' THEN 3
-                ELSE 4
-            END
-    ''').fetchall()
+    categories = get_categories(conn)
 
     if request.method == 'POST':
         name = request.form['product_name']
@@ -178,16 +173,7 @@ def edit_product(id):
         WHERE product_id = ?
     ''', (id,)).fetchone()
 
-    categories = conn.execute('''
-        SELECT * FROM categories
-        ORDER BY
-            CASE category_name
-                WHEN 'Gaming Gear' THEN 1
-                WHEN 'Console Game' THEN 2
-                WHEN 'PC Game' THEN 3
-                ELSE 4
-            END
-    ''').fetchall()
+    categories = get_categories(conn)
 
     if request.method == 'POST':
         name = request.form['product_name']
