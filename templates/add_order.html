@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="eyebrow">New Sale</p>
+        <h1>Add Order</h1>
+    </div>
+</div>
+
+<form class="form-panel" method="post">
+    {% if error %}
+    <div class="notice danger">{{ error }}</div>
+    {% endif %}
+
+    {% if not customers %}
+    <div class="notice danger">Please add a customer before creating an order.</div>
+    {% endif %}
+
+    {% if not products %}
+    <div class="notice danger">Please add a product with stock before creating an order.</div>
+    {% endif %}
+
+    <label>
+        Customer
+        <select name="customer_id" required>
+            {% for c in customers %}
+            <option value="{{ c.customer_id }}">{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <label>
+        Product
+        <select name="product_id" required>
+            {% for p in products %}
+            <option value="{{ p.product_id }}">
+                {{ p.product_name }} - {{ p.price }} (Stock: {{ p.stock }})
+            </option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <label>
+        Quantity
+        <input name="quantity" type="number" min="1" value="1" required>
+    </label>
+
+    <div class="form-actions">
+        <a class="btn ghost" href="/orders">Cancel</a>
+        <button type="submit" {% if not customers or not products %}disabled{% endif %}>
+            Create Order
+        </button>
+    </div>
+</form>
+{% endblock %}

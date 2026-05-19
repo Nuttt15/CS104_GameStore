@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="eyebrow">New Customer</p>
+        <h1>Add Customer</h1>
+    </div>
+</div>
+
+<form class="form-panel" method="post">
+    {% if error %}
+    <div class="notice danger">{{ error }}</div>
+    {% endif %}
+
+    <label>
+        Name
+        <input name="name" placeholder="Customer name" required>
+    </label>
+
+    <label>
+        Phone
+        <input name="phone" placeholder="0801234567">
+    </label>
+
+    <label>
+        Email
+        <input name="email" type="email" placeholder="customer@email.com">
+    </label>
+
+    <div class="form-actions">
+        <a class="btn ghost" href="/customers">Cancel</a>
+        <button type="submit">Save Customer</button>
+    </div>
+</form>
+{% endblock %}

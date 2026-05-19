@@ -61,6 +61,20 @@ a {
     font-weight: 800;
 }
 
+.brand-logo {
+    display: block;
+    width: 42px;
+    height: 42px;
+    max-width: 42px;
+    max-height: 42px;
+    flex: 0 0 42px;
+    object-fit: cover;
+    object-position: center;
+    border: 1px solid rgba(57, 213, 255, 0.45);
+    border-radius: 8px;
+    background: rgba(57, 213, 255, 0.1);
+}
+
 .brand strong,
 .brand small {
     display: block;
@@ -190,9 +204,31 @@ button {
     box-shadow: 0 12px 28px rgba(57, 213, 255, 0.22);
 }
 
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
 .btn.ghost {
     color: var(--text);
     background: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+}
+
+.search-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 10px;
+    margin: 0 0 18px;
+}
+
+.search-panel input {
+    margin: 0;
+    min-height: 44px;
+}
+
+.search-panel .btn,
+.search-panel button {
     box-shadow: none;
 }
 
@@ -264,6 +300,18 @@ option {
     justify-content: flex-end;
     gap: 12px;
     margin-top: 8px;
+}
+
+.notice {
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-weight: 800;
+}
+
+.notice.danger {
+    color: var(--red);
+    background: rgba(255, 107, 122, 0.1);
+    border: 1px solid rgba(255, 107, 122, 0.24);
 }
 
 .table-wrap {
@@ -355,8 +403,15 @@ tr:hover td {
 }
 
 .actions {
-    display: flex;
-    gap: 8px;
+    white-space: nowrap;
+}
+
+.actions .link-btn {
+    margin-right: 8px;
+}
+
+.actions .link-btn:last-child {
+    margin-right: 0;
 }
 
 .link-btn {
@@ -383,6 +438,10 @@ tr:hover td {
     }
 
     .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-panel {
         grid-template-columns: 1fr;
     }
 

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="eyebrow">Customer Records</p>
+        <h1>Customers</h1>
+    </div>
+    <a class="btn" href="/add_customer">+ Add Customer</a>
+</div>
+
+<div class="table-wrap">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+
+        {% for c in customers %}
+        <tr>
+            <td>#{{ c.customer_id }}</td>
+            <td><strong>{{ c.name }}</strong></td>
+            <td>{{ c.phone }}</td>
+            <td>{{ c.email }}</td>
+            <td class="actions">
+                <a class="link-btn" href="/edit_customer/{{ c.customer_id }}">Edit</a>
+                <a class="link-btn danger" href="/delete_customer/{{ c.customer_id }}"
+                   onclick="return confirm('Delete this customer?')">Delete</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td class="empty-state" colspan="5">No customers yet.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -9,7 +9,9 @@
 <body>
     <nav class="topbar">
         <a class="brand" href="/">
-            <span class="brand-icon">GS</span>
+            <img class="brand-logo"
+                 src="{{ url_for('static', filename='Logo-GameStore.png') }}"
+                 alt="GameStore Logo">
             <span>
                 <strong>GameStore</strong>
                 <small>Inventory Control</small>
@@ -19,6 +21,8 @@
         <div class="nav-links">
             <a href="/">Dashboard</a>
             <a href="/products">Products</a>
+            <a href="/customers">Customers</a>
+            <a href="/orders">Orders</a>
         </div>
     </nav>
 

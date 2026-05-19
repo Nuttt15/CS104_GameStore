@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="eyebrow">Sales Orders</p>
+        <h1>Orders</h1>
+    </div>
+    <a class="btn" href="/add_order">+ Add Order</a>
+</div>
+
+<div class="table-wrap">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+
+        {% for o in orders %}
+        <tr>
+            <td>#{{ o.order_id }}</td>
+            <td>{{ o.order_date }}</td>
+            <td><strong>{{ o.customer_name }}</strong></td>
+            <td>{{ o.product_name }}</td>
+            <td>{{ o.quantity }}</td>
+            <td>{{ o.total_price }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td class="empty-state" colspan="6">No orders yet.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
