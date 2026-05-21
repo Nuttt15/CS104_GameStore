@@ -1,0 +1,5 @@
+[GitHub Repo]
+https://github.com/Nuttt15/CS104_3Bit
+
+[Deploy]
+https://nuttt15.pythonanywhere.com/
